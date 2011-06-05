@@ -1,0 +1,5 @@
+<% if @new_vote %>
+  $("#rating_for_<%= @post.id.to_s %>").text("<%= @post.rating.to_s %>");
+<% else %>
+  alert("You have already been voted for that post.");
+<% end %>

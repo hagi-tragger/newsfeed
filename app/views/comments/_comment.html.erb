@@ -1,0 +1,11 @@
+<div id=<%= 'comment_' + comment.id.to_s %>>    
+  <h6>
+    <% if comment.user.nil? %>
+      (anonymous)            
+    <% else %>
+      <u><%= link_to comment.user.name, user_posts_path(comment.user) %></u>
+    <% end %>
+    , <%= comment.created_at.to_s(:db) %>,     <u><%= link_to 'url', post_comment_path(comment.post.id, comment.id) %></u>
+  </h6>
+  <p style="overflow: hidden"><%= comment.body %></p>
+</div>

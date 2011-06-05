@@ -1,0 +1,20 @@
+<h4>
+  <% if @head_text %>
+    <%= @head_text %>
+  <% else %>
+    Latest Headlines
+  <% end %>
+</h4>
+
+<br />
+<% @posts.each do |post| %>
+  <%= render post %>
+<% end %>
+
+<br />
+<%= paginate @posts %>
+
+<br />
+<% if @show_top_only %>
+  <%= link_to 'Read all', all_posts_path %>
+<% end %>

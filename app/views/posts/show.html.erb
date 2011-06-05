@@ -1,0 +1,47 @@
+<h4><%= @post.theme %></h4>
+
+<p style="overflow:hidden">
+  <%= @post.content %>
+</p>
+
+<h6 class="info">
+  <% if @post.source %>
+    <u><%= link_to truncate(@post.source, :length => 30), @post.source %></u> | 
+  <% end %>
+  <u><%= link_to Post.cat_name(@post.category), posts_by_category_path(:name => @post.category) %></u>
+</h6>
+
+<h6 class="info">
+  <% first_tag = @post.tags.find(:first) %>
+  <% for tag in @post.tags %>
+    <% if tag != first_tag %>, <% end %>
+    <u><%= link_to tag.name, posts_by_tag_path(:name => tag.name) %></u>
+  <% end %>
+</h6>
+
+<h6 class="info">
+  <u><%= link_to post_comments_count(@post), user_post_path(@post.user, @post) %></u>
+</h6>
+
+<% if @comments.count > 0 %>
+  <br  />
+  <h5>Comments from users:</h5>
+<% end %>
+
+<br />
+<% @comments.each do |comment| %>
+  <%= render comment %>
+<% end %>
+  
+<br />
+<% paginate @comments %>
+
+<br />
+<% form_tag(post_comments_path(@post), :method => :post) do %>
+  <p>
+    <%= text_area_tag :body, nil, :rows => 3, :cols => 50 %>
+  </p>
+  <p>
+    <%= submit_tag 'Leave a comment' %>
+  </p>
+<% end %>

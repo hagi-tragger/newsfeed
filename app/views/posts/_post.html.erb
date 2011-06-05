@@ -1,0 +1,48 @@
+<div id=<%= 'post_' + post.id.to_s %>>
+  <table width="450" cellpading="0" cellspacing="0">
+    <tr>
+      <td width="70%">
+        <h6>
+          <u><%= link_to post.user.name, user_posts_path(post.user) %></u> , <%= post.created_at.to_s(:db) %>
+        </h6>
+      </td>
+      <td align="right">
+        <div class="vote">
+          <%= link_to '+', post_votes_path(:post_id => post.id, :value => 1), :remote => true, :method => :post %>
+          <%= link_to '–', post_votes_path(:post_id => post.id, :value => -1), :remote => true, :method => :post %>
+          <span id=<%= 'rating_for_' + post.id.to_s %>><%= post.rating %></span>
+        </div>
+      </td>
+    </tr>
+  </table>
+  
+  <h3>
+    <%= link_to_unless(post.source.nil?, post.theme, post.source) %>
+  </h3>    
+  
+  <p style="overflow:hidden">
+    <% if @full_text %>
+      <%= post.content %>
+    <% else %>
+      <%= truncate(post.content, :length => 150, :omission => "") %><%= link_to '...', uncover_path(:id => post.id), :remote => true %>
+    <% end %>
+  </p>
+  
+  <h6 class="info">
+    <% if post.source %>
+      <u><%= link_to truncate(post.source, :length => 30), post.source %></u> | 
+    <% end %>
+    <u><%= link_to Post.cat_name(post.category), posts_by_category_path(:name => post.category) %></u>
+  </h6>
+  
+  <h6 class="info">
+    <% first_tag = post.tags.find(:first) %>
+    <% for tag in post.tags %>
+      <% if tag != first_tag %>, <% end %>
+      <u><%= link_to tag.name, posts_by_tag_path(:name => tag.name) %></u>
+    <% end %>
+  </h6>
+
+  <h6 class="info"><u><%= link_to post_comments_count(post), user_post_path(post.user, post) %></u></h6>
+  <br />
+</div>

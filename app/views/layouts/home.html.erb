@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Newsfeed</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <%= stylesheet_link_tag "style", "newsfeed", :media => "all" %>
+    <%= javascript_include_tag :defaults %>
+</head>
+<body>
+<div id="page">
+  <div id="top">
+    <div class="inner_padding">
+      <p>Use this area to display a message, additional links or advertisment.</p>
+    </div>
+  </div>
+  <div id="header">
+    <div class="inner_padding">
+      <h1><a href="http://web-mastery.info/">Demo Newsfeed</a></h1>
+      <div class="description">Latest News and Information</div>
+    </div>
+  </div>
+  <div id="menu_shadow"></div>
+  <div id="breadcrumb">
+    <table width="750" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="30%">
+          <div class="inner_padding"> >> <%= link_to 'Home', root_path %></div>
+        </td>
+        <td align="right">
+          <div class="inner_padding">
+            <% if current_user == nil %>
+              <%= link_to 'Log in', new_user_session_path %> | <%= link_to 'Register', new_user_registration_path %>
+            <% else %>
+              <%= "Hello, #{current_user.name}!" %> :: <%= link_to 'Add post', new_user_post_path(current_user) %> | <%= link_to 'Profile', edit_user_registration_path %> | <%= link_to 'Log out', destroy_user_session_path %>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="top_curve"></div>
+  <div id="content">
+    <div class="inner_padding">
+      <% if flash[:notice] -%>
+        <div id="notice">
+          <%= flash[:notice] %>
+        </div>
+      <% end -%>
+      <% if flash[:alert] -%>
+        <div id="alert">
+          <%= flash[:alert] %>
+        </div>
+      <% end -%>
+      <div id="left">
+        <%= yield :layout %>
+      </div>
+      <div id="right"> <img src="/images/adsense_160x600.gif" alt="" />
+      </div>
+      <div class="spacer"></div>
+    </div>
+  </div>
+  <div id="bottom_curve"> </div>
+  <div id="footer">
+    <div class="inner_padding">
+      <p>Template courtesy of <a target="_blank" rel="nofollow" href="http://www.designsbydarren.com">Designs by Darren</a><br/>
+        <a target="_blank" href="http://validator.w3.org/check?uri=referer">Valid XHTML 1.0 Strict</a></p>
+    </div>
+  </div>
+  <div id="bottom">
+    <div class="inner_padding">
+      <p>All Content &copy;2007 Your Site Name, All Rights Reserved.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

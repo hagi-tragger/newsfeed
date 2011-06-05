@@ -1,0 +1,35 @@
+<%= @post.errors.full_messages.each do |message| %>
+  <li><%= message %></li>
+<% end %>
+<% form_for @post do |f|%>
+  <p>
+    <%= f.label :theme, "Theme" %>:
+    <%= f.text_field :theme, :size => 70 %>
+  </p>
+  
+  <p>
+    <%= f.label :category, "Category" %>:
+    <%= 
+      f.select :category,
+        Post::CATEGORIES,
+        :prompt => "Select a category"
+    %>
+  </p>
+  
+  <p>
+    <%= f.label :content, "Content" %>:
+    <%= f.text_area :content, :rows => 5, :cols => 50 %>
+  </p>
+  
+  <p>
+    <%= f.label :source, "Source" %>:
+    <%= f.text_field :source, :size => 70 %>
+  </p>
+  
+  <p>
+    <%= f.label :tag_list, "Tags"%>:
+    <%= f.text_field :tag_list, :size => 70 %>
+  </p>
+  
+  <%= f.submit "Make a post" %>
+<% end %>
